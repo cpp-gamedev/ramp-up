@@ -1,0 +1,8 @@
+**/.vs/*
+**/.vscode/*
+build/*
+out/*
+.clangd/*
+
+CMakeSettings.json
+compile_commands.json
