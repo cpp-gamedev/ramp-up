@@ -26,7 +26,7 @@ function(unzip_archive ARCHIVE_NAME SUBDIR)
 	if(NOT EXISTS "${SUBDIR}/${ARCHIVE_NAME}")
 		message(FATAL_ERROR "Required archvives missing!\n${SUBDIR}/${ARCHIVE_NAME}")
 	endif()
-	message(STATUS "Extracting ${ARCHIVE_NAME}...")
+	message(STATUS "Extracting ${SUBDIR}/${ARCHIVE_NAME}...")
 	execute_process(COMMAND 
 		${CMAKE_COMMAND} -E tar -xf "${ARCHIVE_NAME}"
 		WORKING_DIRECTORY "${SUBDIR}"
