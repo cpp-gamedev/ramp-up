@@ -1,0 +1,43 @@
+version: "{build}"
+environment:
+  matrix:
+    - job_name: Windows x64
+      appveyor_build_worker_image: Visual Studio 2019
+    - job_name: Linux x64
+      appveyor_build_worker_image: Ubuntu
+configuration:
+  - Release
+install:
+  - cmd: |
+      if not exist ext/sfml-2.5.1.zip curl -L --silent --show-error --output ext/sfml-2.5.1.zip https://www.sfml-dev.org/files/SFML-2.5.1-windows-vc15-64-bit.zip
+      if "%SKIP_WINDOWS%" equ "true" echo -- Skipping Windows -- && appveyor exit
+      cmake -G "Visual Studio 16 2019" .
+  - sh: |
+      [ ! -f sfml-2.5.1.tar.gz ] && echo "== Downloading SFML ==" && wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz -O ext/sfml-2.5.1.tar.gz
+      [ "$SKIP_LINUX" == "true" ] && echo "-- Skipping Linux --" && exit
+      echo -e "== Installing Dependencies ==" && sudo apt -qq update -y && sudo apt -qq install -y libx11-dev libxrandr-dev libopenal-dev
+      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+      sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 9
+      sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-9 9
+      cmake -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=$CONFIGURATION .
+for:
+  - matrix:
+      only:
+        - job_name: Windows x64
+    build:
+      project: ramp-up.sln
+      parallel: true
+      verbosity: minimal
+    cache:
+      - ext/sfml-2.5.1.zip
+  - matrix:
+      only:
+        - job_name: Linux x64
+    build_script:
+      - sh: echo -e "Version=$rect_version\n == Building Linux $CONFIGURATION ==" && ninja -v || exit 1
+    cache:
+      - ext/sfml-2.5.1.tar.gz
+matrix:
+  fast_finish: true
+
+skip_branch_with_pr: true
