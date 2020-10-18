@@ -13,7 +13,7 @@ install:
       if "%SKIP_WINDOWS%" equ "true" echo -- Skipping Windows -- && appveyor exit
       cmake -G "Visual Studio 16 2019" .
   - sh: |
-      [ ! -f sfml-2.5.1.tar.gz ] && echo "== Downloading SFML ==" && wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz -O ext/sfml-2.5.1.tar.gz
+      [ ! -f ext/sfml-2.5.1.tar.gz ] && echo "== Downloading SFML ==" && wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz -O ext/sfml-2.5.1.tar.gz
       [ "$SKIP_LINUX" == "true" ] && echo "-- Skipping Linux --" && exit
       echo -e "== Installing Dependencies ==" && sudo apt -qq update -y && sudo apt -qq install -y libx11-dev libxrandr-dev libopenal-dev
       sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
