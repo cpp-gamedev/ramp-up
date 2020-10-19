@@ -39,6 +39,7 @@ if(DOWNLOAD_SFML)
 endif()
 
 # Dependencies
+set(SFML_STATIC_LIBRARIES ON CACHE BOOL "" FORCE)
 find_package(SFML REQUIRED COMPONENTS graphics audio)
 
 # Git operations
