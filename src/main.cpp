@@ -28,7 +28,7 @@ namespace
         {
             length = 16;
         }
-        else if (between(decimalNumber, -2147483648, 2147483647))
+        else if (between(decimalNumber, -2147483647, 2147483646))
         {
             length = 32;
         }
