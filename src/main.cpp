@@ -3,9 +3,10 @@
 #include <filesystem>
 #include <iostream>
 #include <sstream>
+#include <assert.h>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include <functions.hpp>
+#include "functions.hpp"
 
 using u32 = std::uint32_t;
 using s32 = std::int32_t;
