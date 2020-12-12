@@ -1,10 +1,12 @@
-#include <cassert>
+#include <cstddef>
 #include <cstdint>
 #include <filesystem>
 #include <iostream>
 #include <sstream>
+#include <assert.h>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "functions.hpp"
 
 using u32 = std::uint32_t;
 using s32 = std::int32_t;
@@ -66,6 +68,9 @@ void pollEvents(sf::Window& out_window, bool& out_bQuit) {
 } // namespace
 
 int main(int argc, char** argv) {
+
+	numconv::converter();
+
 	if (argc > 0) {
 		std::string_view const argv0 = argv[0];
 		auto const full_path = std::filesystem::absolute(argv0);
